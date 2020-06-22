@@ -5,11 +5,7 @@ CurrentlyReading.propTypes = {
   currentlyReading: PropTypes.array.isRequired
 };
 
-function CurrentlyReading({
-  currentlyReading,
-  getSelectedValue,
-  selectedValue
-}) {
+function CurrentlyReading({ currentlyReading, moveOutFromCurrentlyReading }) {
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">Currently Reading</h2>
@@ -25,18 +21,20 @@ function CurrentlyReading({
                       style={{
                         width: 128,
                         height: 193,
-                        backgroundImage: `url(${book.images})`
+                        backgroundImage: `url(${book.imageLinks.thumbnail})`
                       }}
                     />
                     <div className="book-shelf-changer">
                       <select
-                        value={selectedValue}
-                        onChange={event => getSelectedValue(event, index)}
+                        value="currentlyReading"
+                        onChange={event =>
+                          moveOutFromCurrentlyReading(event, index)
+                        }
                       >
                         <option value="move" disabled>
                           Move to...
                         </option>
-                        <option value="currentlyReading">
+                        <option value="currentlyReading" disabled>
                           Currently Reading
                         </option>
                         <option value="wantToRead">Want to Read</option>
@@ -45,8 +43,8 @@ function CurrentlyReading({
                       </select>
                     </div>
                   </div>
-                  <div className="book-title">{book.name}</div>
-                  <div className="book-authors">{book.author}</div>
+                  <div className="book-title">{book.title}</div>
+                  <div className="book-authors">{book.authors}</div>
                 </div>
               </li>
             </React.Fragment>

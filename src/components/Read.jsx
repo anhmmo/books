@@ -5,7 +5,7 @@ Read.propTypes = {
   read: PropTypes.array.isRequired
 };
 
-function Read({ read }) {
+function Read({ read, moveOutFromRead }) {
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">Read</h2>
@@ -21,11 +21,14 @@ function Read({ read }) {
                       style={{
                         width: 128,
                         height: 192,
-                        backgroundImage: `url(${book.images})`
+                        backgroundImage: `url(${book.imageLinks.thumbnail})`
                       }}
                     />
                     <div className="book-shelf-changer">
-                      <select>
+                      <select
+                        value="read"
+                        onChange={event => moveOutFromRead(event, index)}
+                      >
                         <option value="move" disabled>
                           Move to...
                         </option>
@@ -33,13 +36,15 @@ function Read({ read }) {
                           Currently Reading
                         </option>
                         <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
+                        <option value="read" disabled>
+                          Read
+                        </option>
                         <option value="none">None</option>
                       </select>
                     </div>
                   </div>
-                  <div className="book-title">{book.name}</div>
-                  <div className="book-authors">{book.author}</div>
+                  <div className="book-title">{book.title}</div>
+                  <div className="book-authors">{book.authors}</div>
                 </div>
               </li>
             </React.Fragment>
