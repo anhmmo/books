@@ -21,7 +21,7 @@ class BooksApp extends React.Component {
     wantToRead: wantToRead,
     showSearchPage: false,
     bookDataFromServer: [],
-    disableIndex: Number.NEGATIVE_INFINITY
+    disableIndex: []
   };
 
   render() {
@@ -44,7 +44,7 @@ class BooksApp extends React.Component {
             this.setState({
               currentlyReading: newArray.concat(newItem),
               selectedValue: "",
-              disableIndex: index
+              disableIndex: this.state.disableIndex.concat(index)
             });
             break;
           case "wantToRead":
@@ -55,7 +55,7 @@ class BooksApp extends React.Component {
             this.setState({
               wantToRead: newArray2.concat(newItem2),
               selectedValue: "",
-              disableIndex: index
+              disableIndex: this.state.disableIndex.concat(index)
             });
             break;
           case "read":
@@ -66,7 +66,7 @@ class BooksApp extends React.Component {
             this.setState({
               read: newArray3.concat(newItem3),
               selectedValue: "",
-              disableIndex: index
+              disableIndex: this.state.disableIndex.concat(index)
             });
             break;
           default:
@@ -177,6 +177,9 @@ class BooksApp extends React.Component {
             bookDataFromServer={this.state.bookDataFromServer}
             moveOutFromServer={moveOutFromServer}
             disableIndex={this.state.disableIndex}
+            currentlyReading={this.state.currentlyReading}
+            read={this.state.read}
+            wantToRead={this.state.wantToRead}
           />
         ) : (
           <div className="list-books">
