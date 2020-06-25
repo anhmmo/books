@@ -1,12 +1,12 @@
 import React from "react";
 // import * as BooksAPI from './BooksAPI'
 import "./App.css";
-import CurrentlyReading from "./components/CurrentlyReading";
-import WantToRead from "./components/WantToRead";
-import Read from "./components/Read";
+import CurrentlyReading from "./components/HomePage/CurrentlyReading/CurrentlyReading";
+import WantToRead from "./components/HomePage/WantToRead/WantToRead";
+import Read from "./components/HomePage/Read/Read";
 
-import { currentlyReading, read, wantToRead } from "./data";
-import SearchBox from "./components/SearchBox";
+import { currentlyReading, read, wantToRead } from "./components/HomePage/data";
+import SearchBox from "./components/SearchPage/SearchBox";
 
 class BooksApp extends React.Component {
   state = {
