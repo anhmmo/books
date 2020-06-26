@@ -1,28 +1,28 @@
 import React from "react";
-// import * as BooksAPI from './BooksAPI'
-import "./App.css";
-import CurrentlyReading from "./components/HomePage/CurrentlyReading/CurrentlyReading";
-import WantToRead from "./components/HomePage/WantToRead/WantToRead";
-import Read from "./components/HomePage/Read/Read";
+import "./App.scss";
 
-import { currentlyReading, read, wantToRead } from "./components/HomePage/data";
-import SearchBox from "./components/SearchPage/SearchBox";
+import {
+  currentlyReading,
+  read,
+  wantToRead
+} from "./components/HomePage/SampleData/Data";
+import SearchBox from "./components/HomePage/SearchPage/SearchBox";
+import HomePage from "./components/HomePage/HomePage";
 
-class BooksApp extends React.Component {
-  state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    currentlyReading: currentlyReading,
-    read: read,
-    wantToRead: wantToRead,
-    showSearchPage: false,
-    bookDataFromServer: [],
-    disableIndex: []
-  };
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currentlyReading:
+        JSON.parse(localStorage.getItem("currentlyReading")) ||
+        currentlyReading,
+      read: JSON.parse(localStorage.getItem("read")) || read,
+      wantToRead: JSON.parse(localStorage.getItem("wantToRead")) || wantToRead,
+      showSearchPage: false,
+      bookDataFromServer: [],
+      disableIndex: []
+    };
+  }
 
   render() {
     const closeSearchBox = () => {
@@ -40,6 +40,10 @@ class BooksApp extends React.Component {
             let item = [...this.state.bookDataFromServer];
             let newItem = item.splice(index, 1);
             let newArray = [...this.state.currentlyReading];
+            localStorage.setItem(
+              "currentlyReading",
+              JSON.stringify(newArray.concat(newItem))
+            );
 
             this.setState({
               currentlyReading: newArray.concat(newItem),
@@ -51,6 +55,10 @@ class BooksApp extends React.Component {
             let item2 = [...this.state.bookDataFromServer];
             let newItem2 = item2.splice(index, 1);
             let newArray2 = [...this.state.wantToRead];
+            localStorage.setItem(
+              "wantToRead",
+              JSON.stringify(newArray2.concat(newItem2))
+            );
 
             this.setState({
               wantToRead: newArray2.concat(newItem2),
@@ -62,6 +70,11 @@ class BooksApp extends React.Component {
             let item3 = [...this.state.bookDataFromServer];
             let newItem3 = item3.splice(index, 1);
             let newArray3 = [...this.state.read];
+
+            localStorage.setItem(
+              "read",
+              JSON.stringify(newArray3.concat(newItem3))
+            );
 
             this.setState({
               read: newArray3.concat(newItem3),
@@ -82,7 +95,11 @@ class BooksApp extends React.Component {
             let item = [...this.state.currentlyReading];
             let newItem = item.splice(index, 1);
             let newArray = [...this.state.wantToRead];
-
+            localStorage.setItem("currentlyReading", JSON.stringify(item));
+            localStorage.setItem(
+              "wantToRead",
+              JSON.stringify(newArray.concat(newItem))
+            );
             this.setState({
               currentlyReading: item,
               wantToRead: newArray.concat(newItem),
@@ -93,6 +110,11 @@ class BooksApp extends React.Component {
             let item2 = [...this.state.currentlyReading];
             let newItem2 = item2.splice(index, 1);
             let newArray2 = [...this.state.read];
+            localStorage.setItem("currentlyReading", JSON.stringify(item2));
+            localStorage.setItem(
+              "read",
+              JSON.stringify(newArray2.concat(newItem2))
+            );
 
             this.setState({
               currentlyReading: item2,
@@ -113,6 +135,11 @@ class BooksApp extends React.Component {
             let item = [...this.state.wantToRead];
             let newItem = item.splice(index, 1);
             let newArray = [...this.state.read];
+            localStorage.setItem("wantToRead", JSON.stringify(item));
+            localStorage.setItem(
+              "read",
+              JSON.stringify(newArray.concat(newItem))
+            );
 
             this.setState({
               wantToRead: item,
@@ -124,6 +151,11 @@ class BooksApp extends React.Component {
             let item2 = [...this.state.wantToRead];
             let newItem2 = item2.splice(index, 1);
             let newArray2 = [...this.state.currentlyReading];
+            localStorage.setItem("wantToRead", JSON.stringify(item2));
+            localStorage.setItem(
+              "currentlyReading",
+              JSON.stringify(newArray2.concat(newItem2))
+            );
 
             this.setState({
               wantToRead: item2,
@@ -144,6 +176,11 @@ class BooksApp extends React.Component {
             let item = [...this.state.read];
             let newItem = item.splice(index, 1);
             let newArray = [...this.state.wantToRead];
+            localStorage.setItem("read", JSON.stringify(item));
+            localStorage.setItem(
+              "wantToRead",
+              JSON.stringify(newArray.concat(newItem))
+            );
 
             this.setState({
               read: item,
@@ -155,6 +192,11 @@ class BooksApp extends React.Component {
             let item2 = [...this.state.read];
             let newItem2 = item2.splice(index, 1);
             let newArray2 = [...this.state.currentlyReading];
+            localStorage.setItem("read", JSON.stringify(item2));
+            localStorage.setItem(
+              "currentlyReading",
+              JSON.stringify(newArray2.concat(newItem2))
+            );
 
             this.setState({
               read: item2,
@@ -182,36 +224,23 @@ class BooksApp extends React.Component {
             wantToRead={this.state.wantToRead}
           />
         ) : (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <CurrentlyReading
-                  currentlyReading={this.state.currentlyReading}
-                  moveOutFromCurrentlyReading={moveOutFromCurrentlyReading}
-                />
-                <WantToRead
-                  wantToRead={this.state.wantToRead}
-                  moveOutFromWantToRead={moveOutFromWantToRead}
-                />
-                <Read
-                  read={this.state.read}
-                  moveOutFromRead={moveOutFromRead}
-                />
-              </div>
-            </div>
-            <div className="open-search">
-              <button onClick={() => this.setState({ showSearchPage: true })}>
-                Add a book
-              </button>
-            </div>
-          </div>
+          <HomePage
+            moveOutFromCurrentlyReading={moveOutFromCurrentlyReading}
+            moveOutFromWantToRead={moveOutFromWantToRead}
+            moveOutFromRead={moveOutFromRead}
+            currentlyReading={this.state.currentlyReading}
+            read={this.state.read}
+            wantToRead={this.state.wantToRead}
+          />
         )}
+        <div className="open-search">
+          <button onClick={() => this.setState({ showSearchPage: true })}>
+            Add a book
+          </button>
+        </div>
       </div>
     );
   }
 }
 
-export default BooksApp;
+export default App;

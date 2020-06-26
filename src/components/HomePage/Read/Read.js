@@ -17,11 +17,19 @@ function Read({ read, moveOutFromRead }) {
                 <div className="book">
                   <div className="book-top">
                     <div
-                      className="book-cover"
+                      className={
+                        book.hasOwnProperty("imageLinks")
+                          ? "book-cover"
+                          : "image-notfound"
+                      }
                       style={{
                         width: 128,
                         height: 192,
-                        backgroundImage: `url(${book.imageLinks.thumbnail})`
+                        backgroundImage: `url(${
+                          book.hasOwnProperty("imageLinks")
+                            ? book.imageLinks.thumbnail
+                            : "https://filmi.netlify.app/static/media/no_image.31f5bb1d.jpg"
+                        })`
                       }}
                     />
                     <div className="book-shelf-changer">

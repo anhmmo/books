@@ -1,44 +1,51 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-WantToRead.propTypes = {
-  wantToRead: PropTypes.array.isRequired
+CurrentlyReading.propTypes = {
+  currentlyReading: PropTypes.array.isRequired
 };
 
-function WantToRead({ wantToRead, moveOutFromWantToRead }) {
+function CurrentlyReading({ currentlyReading, moveOutFromCurrentlyReading }) {
   return (
     <div className="bookshelf">
-      <h2 className="bookshelf-title">Want to Read</h2>
+      <h2 className="bookshelf-title">Currently Reading</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
-          {wantToRead.map((book, index) => (
+          {currentlyReading.map((book, index) => (
             <React.Fragment key={index}>
-              {" "}
               <li>
                 <div className="book">
                   <div className="book-top">
                     <div
-                      className="book-cover"
+                      className={
+                        book.hasOwnProperty("imageLinks")
+                          ? "book-cover"
+                          : "image-notfound"
+                      }
                       style={{
                         width: 128,
-                        height: 192,
-                        backgroundImage: `url(${book.imageLinks.thumbnail})`
+                        height: 193,
+                        backgroundImage: `url(${
+                          book.hasOwnProperty("imageLinks")
+                            ? book.imageLinks.thumbnail
+                            : "https://filmi.netlify.app/static/media/no_image.31f5bb1d.jpg"
+                        })`
                       }}
                     />
                     <div className="book-shelf-changer">
                       <select
-                        value="wantToRead"
-                        onChange={event => moveOutFromWantToRead(event, index)}
+                        value="currentlyReading"
+                        onChange={event =>
+                          moveOutFromCurrentlyReading(event, index)
+                        }
                       >
                         <option value="move" disabled>
                           Move to...
                         </option>
-                        <option value="currentlyReading">
+                        <option value="currentlyReading" disabled>
                           Currently Reading
                         </option>
-                        <option value="wantToRead" disabled>
-                          Want to Read
-                        </option>
+                        <option value="wantToRead">Want to Read</option>
                         <option value="read">Read</option>
                         <option value="none">None</option>
                       </select>
@@ -56,4 +63,4 @@ function WantToRead({ wantToRead, moveOutFromWantToRead }) {
   );
 }
 
-export default WantToRead;
+export default CurrentlyReading;

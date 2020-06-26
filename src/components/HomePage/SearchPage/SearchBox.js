@@ -12,10 +12,9 @@ function SearchBox({
   seachInputChange,
   bookDataFromServer = [],
   moveOutFromServer,
-  disableIndex,
+  currentlyReading,
   read,
-  wantToRead,
-  currentlyReading
+  wantToRead
 }) {
   const timeOutRef = useRef(null);
 
@@ -44,23 +43,32 @@ function SearchBox({
   };
 
   let mangMoi = [];
-  let vitriMang;
+  let indexN = [];
 
   if (
-    read.length > 0 &&
     wantToRead.length > 0 &&
+    read.length > 0 &&
     currentlyReading.length > 0 &&
     bookDataFromServer.length > 0
   ) {
-    mangMoi = [...read, ...wantToRead, ...currentlyReading];
-    console.log(mangMoi);
-    console.log(bookDataFromServer);
-    for (let i = 0; i < mangMoi.length; i++) {
-      vitriMang = bookDataFromServer.map(
-        item => item.authors[0] === mangMoi[i].authors[0]
-      );
+    mangMoi = [...wantToRead, ...read, ...currentlyReading];
+
+    for (let i = 0; i < bookDataFromServer.length; i++) {
+      for (let j = 0; j < mangMoi.length; j++) {
+        let authors1 = mangMoi[j].hasOwnProperty("authors")
+          ? mangMoi[j].authors[0]
+          : " ";
+        let authors2 = bookDataFromServer[i].hasOwnProperty("authors")
+          ? bookDataFromServer[i].authors[0]
+          : " ";
+        if (
+          mangMoi[j].title === bookDataFromServer[i].title &&
+          authors1 === authors2
+        ) {
+          indexN.push(i);
+        }
+      }
     }
-    console.log(vitriMang.indexOf(true));
   }
 
   return (
@@ -92,7 +100,7 @@ function SearchBox({
                             : "image-notfound"
                         }
                         style={
-                          disableIndex.includes(index)
+                          indexN.includes(index)
                             ? {
                                 filter: "grayscale(1)",
                                 width: 128,
@@ -116,14 +124,14 @@ function SearchBox({
                       />
                       <div
                         style={
-                          disableIndex.includes(index)
+                          indexN.includes(index)
                             ? { backgroundColor: "gray" }
                             : {}
                         }
                         className="book-shelf-changer"
                       >
                         <select
-                          disabled={disableIndex.includes(index)}
+                          disabled={indexN.includes(index)}
                           value="move"
                           onChange={event => moveOutFromServer(event, index)}
                         >
