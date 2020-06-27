@@ -1,21 +1,21 @@
 html {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+    box-sizing: inherit;
 }
 body {
-  margin: 0;
-  padding: 0;
-  font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
 }
 
 .image-notfound {
-  background-position: center;
-  width: 128px;
-  height: 193px;
-  background-size: cover;
-  background-image: url(https://filmi.netlify.app/static/media/no_image.31f5bb1d.jpg);
+    background-position: center;
+    width: 128px;
+    height: 193px;
+    background-size: cover;
+    background-image: url(https://filmi.netlify.app/static/media/no_image.31f5bb1d.jpg);
 }
