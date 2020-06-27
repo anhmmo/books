@@ -7,6 +7,7 @@ function ListBook(props) {
     <div className="search-books-results">
       <ol className="books-grid">
         {typeof bookDataFromServer !== "undefined" &&
+          bookDataFromServer.length > 0 &&
           bookDataFromServer.map((book, index) => (
             <React.Fragment key={index}>
               <li>
