@@ -19,13 +19,17 @@ class SearchPage extends Component {
         currentlyReading,
       read: JSON.parse(localStorage.getItem("read")) || read,
       wantToRead: JSON.parse(localStorage.getItem("wantToRead")) || wantToRead,
+      selectedValue: "",
+      noResult: false,
     };
   }
   render() {
     const seachInputChange = (result) => {
-      this.setState({ bookDataFromServer: result.books }, () =>
-        console.log(this.state.bookDataFromServer)
-      );
+      this.setState({ bookDataFromServer: result.books }, () => {
+        this.state.bookDataFromServer instanceof Array
+          ? console.log(this.state.bookDataFromServer)
+          : this.setState({ noResult: true });
+      });
     };
 
     const moveOutFromServer = (event, index) => {
@@ -91,7 +95,9 @@ class SearchPage extends Component {
       }
 
       this.timeOutRef.current = setTimeout(() => {
-        if (value.length === 0) return seachInputChange([]);
+        if (value.length === 0) {
+          return seachInputChange([]);
+        }
 
         fetch("https://reactnd-books-api.udacity.com/search", {
           method: "POST",
@@ -149,6 +155,7 @@ class SearchPage extends Component {
           moveOutFromServer={moveOutFromServer}
           bookDataFromServer={this.state.bookDataFromServer}
           indexN={indexN}
+          noResult={this.state.noResult}
         />
       </div>
     );

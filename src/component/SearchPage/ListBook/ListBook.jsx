@@ -1,13 +1,13 @@
 import React from "react";
 
 function ListBook(props) {
-  const { bookDataFromServer, indexN, moveOutFromServer } = props;
+  const { bookDataFromServer, indexN, moveOutFromServer, noResult } = props;
 
   return (
     <div className="search-books-results">
       <ol className="books-grid">
         {typeof bookDataFromServer !== "undefined" &&
-          bookDataFromServer.length > 0 &&
+        bookDataFromServer.length > 0 ? (
           bookDataFromServer.map((book, index) => (
             <React.Fragment key={index}>
               <li>
@@ -72,7 +72,10 @@ function ListBook(props) {
                 </div>
               </li>
             </React.Fragment>
-          ))}
+          ))
+        ) : (
+          <div>{noResult ? "no result" : ""}</div>
+        )}
       </ol>
     </div>
   );
