@@ -51,7 +51,6 @@ function ListBook(props) {
                       className="book-shelf-changer"
                     >
                       <select
-                        disabled={indexN.includes(index)}
                         value="move"
                         onChange={(event) => moveOutFromServer(event, index)}
                       >
