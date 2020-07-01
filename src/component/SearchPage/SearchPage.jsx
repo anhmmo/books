@@ -33,58 +33,119 @@ class SearchPage extends Component {
     };
 
     const moveOutFromServer = (event, index) => {
-      this.setState({ selectedValue: event.target.value }, () => {
-        switch (this.state.selectedValue) {
-          case "currentlyReading":
-            let item = [...this.state.bookDataFromServer];
-            let newItem = item.splice(index, 1);
-            let newArray = [...this.state.currentlyReading];
-            localStorage.setItem(
-              "currentlyReading",
-              JSON.stringify(newArray.concat(newItem))
-            );
-
-            this.setState({
-              currentlyReading: newArray.concat(newItem),
-              selectedValue: "",
-              disableIndex: this.state.disableIndex.concat(index),
-            });
-            break;
-          case "wantToRead":
-            let item2 = [...this.state.bookDataFromServer];
-            let newItem2 = item2.splice(index, 1);
-            let newArray2 = [...this.state.wantToRead];
-            localStorage.setItem(
-              "wantToRead",
-              JSON.stringify(newArray2.concat(newItem2))
-            );
-
-            this.setState({
-              wantToRead: newArray2.concat(newItem2),
-              selectedValue: "",
-              disableIndex: this.state.disableIndex.concat(index),
-            });
-            break;
-          case "read":
-            let item3 = [...this.state.bookDataFromServer];
-            let newItem3 = item3.splice(index, 1);
-            let newArray3 = [...this.state.read];
-
-            localStorage.setItem(
-              "read",
-              JSON.stringify(newArray3.concat(newItem3))
-            );
-
-            this.setState({
-              read: newArray3.concat(newItem3),
-              selectedValue: "",
-              disableIndex: this.state.disableIndex.concat(index),
-            });
-            break;
-          default:
-            break;
+      let value002 = event.target.value;
+      let b = [...this.state.currentlyReading];
+      let c = [...this.state.read];
+      let d = [...this.state.wantToRead];
+      let aaa = [...b, ...c, ...d];
+      let indexNumber = this.state.bookDataFromServer[index];
+      const getResultNumber = (arr, indexNum, text) => {
+        for (let i = 0; i < arr.length; i++) {
+          let authors1 = arr[i].hasOwnProperty("authors")
+            ? arr[i].authors[0]
+            : " ";
+          let authors2 = indexNum.hasOwnProperty("authors")
+            ? indexNum.authors[0]
+            : " ";
+          if (arr[i].title === indexNum.title && authors1 === authors2) {
+            switch (text) {
+              case "currentlyReading":
+                return text;
+              case "read":
+                return text;
+              case "wantToRead":
+                return text;
+              default:
+                return "all";
+            }
+          }
         }
-      });
+      };
+
+      let check = getResultNumber(aaa, indexNumber);
+      if (check === "all") {
+        this.setState({ selectedValue: value002 }, () => {
+          switch (this.state.selectedValue) {
+            case "currentlyReading":
+              let art =
+                getResultNumber(b, indexNumber, "currentlyReading") ||
+                getResultNumber(d, indexNumber, "wantToRead") ||
+                getResultNumber(c, indexNumber, "read");
+              console.log(art);
+
+              break;
+            case "wantToRead":
+              let art2 =
+                getResultNumber(b, indexNumber, "currentlyReading") ||
+                getResultNumber(d, indexNumber, "wantToRead") ||
+                getResultNumber(c, indexNumber, "read");
+              console.log(art2);
+              break;
+            case "read":
+              let art3 =
+                getResultNumber(b, indexNumber, "currentlyReading") ||
+                getResultNumber(d, indexNumber, "wantToRead") ||
+                getResultNumber(c, indexNumber, "read");
+              console.log(art3);
+              break;
+            default:
+              break;
+          }
+        });
+      } else {
+        this.setState({ selectedValue: value002 }, () => {
+          switch (this.state.selectedValue) {
+            case "currentlyReading":
+              let item = [...this.state.bookDataFromServer];
+              let newItem = item.splice(index, 1);
+              let newArray = [...this.state.currentlyReading];
+              localStorage.setItem(
+                "currentlyReading",
+                JSON.stringify(newArray.concat(newItem))
+              );
+
+              this.setState({
+                currentlyReading: newArray.concat(newItem),
+                selectedValue: "",
+                disableIndex: this.state.disableIndex.concat(index),
+              });
+              break;
+            case "wantToRead":
+              let item2 = [...this.state.bookDataFromServer];
+              let newItem2 = item2.splice(index, 1);
+              let newArray2 = [...this.state.wantToRead];
+              localStorage.setItem(
+                "wantToRead",
+                JSON.stringify(newArray2.concat(newItem2))
+              );
+
+              this.setState({
+                wantToRead: newArray2.concat(newItem2),
+                selectedValue: "",
+                disableIndex: this.state.disableIndex.concat(index),
+              });
+              break;
+            case "read":
+              let item3 = [...this.state.bookDataFromServer];
+              let newItem3 = item3.splice(index, 1);
+              let newArray3 = [...this.state.read];
+
+              localStorage.setItem(
+                "read",
+                JSON.stringify(newArray3.concat(newItem3))
+              );
+
+              this.setState({
+                read: newArray3.concat(newItem3),
+                selectedValue: "",
+                disableIndex: this.state.disableIndex.concat(index),
+              });
+              break;
+            default:
+              break;
+          }
+        });
+      }
     };
 
     const searchInput = (event) => {
