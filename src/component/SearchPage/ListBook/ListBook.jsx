@@ -20,7 +20,7 @@ function ListBook(props) {
                           : "image-notfound"
                       }
                       style={
-                        indexN.includes(index)
+                        indexN.some((item) => item.i === index)
                           ? {
                               filter: "grayscale(1)",
                               width: 128,
@@ -44,14 +44,21 @@ function ListBook(props) {
                     />
                     <div
                       style={
-                        indexN.includes(index)
+                        indexN.some((item) => item.i === index)
                           ? { backgroundColor: "gray" }
                           : {}
                       }
                       className="book-shelf-changer"
                     >
                       <select
-                        value="move"
+                        defaultValue={
+                          indexN.some((item) => item.i === index)
+                            ? indexN
+                                .filter((item) => item.i === index)
+                                .map((item) => item.active)
+                                .toString()
+                            : "move"
+                        }
                         onChange={(event) => moveOutFromServer(event, index)}
                       >
                         <option value="move" disabled>

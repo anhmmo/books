@@ -75,6 +75,9 @@ class SearchPage extends Component {
                 let bb = [...this.state.currentlyReading];
                 let cc = [...this.state.read];
                 let uu = cc.splice(art.i, 1);
+
+                uu[0].active = "currentlyReading";
+
                 localStorage.setItem(
                   "currentlyReading",
                   JSON.stringify(bb.concat(uu))
@@ -86,6 +89,9 @@ class SearchPage extends Component {
                 let bb = [...this.state.currentlyReading];
                 let cc = [...this.state.wantToRead];
                 let uu = cc.splice(art.i, 1);
+
+                uu[0].active = "currentlyReading";
+
                 localStorage.setItem(
                   "currentlyReading",
                   JSON.stringify(bb.concat(uu))
@@ -103,6 +109,9 @@ class SearchPage extends Component {
                 let bb = [...this.state.wantToRead];
                 let cc = [...this.state.read];
                 let uu = cc.splice(art.i, 1);
+
+                uu[0].active = "wantToRead";
+
                 localStorage.setItem(
                   "wantToRead",
                   JSON.stringify(bb.concat(uu))
@@ -114,6 +123,9 @@ class SearchPage extends Component {
                 let bb = [...this.state.wantToRead];
                 let cc = [...this.state.currentlyReading];
                 let uu = cc.splice(art.i, 1);
+
+                uu[0].active = "wantToRead";
+
                 localStorage.setItem(
                   "wantToRead",
                   JSON.stringify(bb.concat(uu))
@@ -131,6 +143,8 @@ class SearchPage extends Component {
                 let bb = [...this.state.read];
                 let cc = [...this.state.wantToRead];
                 let uu = cc.splice(art.i, 1);
+                uu[0].active = "read";
+
                 localStorage.setItem("read", JSON.stringify(bb.concat(uu)));
                 localStorage.setItem("wantToRead", JSON.stringify(cc));
                 this.setState({ wantToRead: cc, read: bb.concat(uu) });
@@ -139,6 +153,8 @@ class SearchPage extends Component {
                 let bb = [...this.state.read];
                 let cc = [...this.state.currentlyReading];
                 let uu = cc.splice(art.i, 1);
+                uu[0].active = "read";
+
                 localStorage.setItem("read", JSON.stringify(bb.concat(uu)));
                 localStorage.setItem("currentlyReading", JSON.stringify(cc));
                 this.setState({
@@ -157,6 +173,8 @@ class SearchPage extends Component {
             case "currentlyReading":
               let item = [...this.state.bookDataFromServer];
               let newItem = item.splice(index, 1);
+
+              newItem[0].active = "currentlyReading";
               let newArray = [...this.state.currentlyReading];
               localStorage.setItem(
                 "currentlyReading",
@@ -173,6 +191,8 @@ class SearchPage extends Component {
               let item2 = [...this.state.bookDataFromServer];
               let newItem2 = item2.splice(index, 1);
               let newArray2 = [...this.state.wantToRead];
+
+              newItem2[0].active = "wantToRead";
               localStorage.setItem(
                 "wantToRead",
                 JSON.stringify(newArray2.concat(newItem2))
@@ -189,6 +209,7 @@ class SearchPage extends Component {
               let newItem3 = item3.splice(index, 1);
               let newArray3 = [...this.state.read];
 
+              newItem3[0].active = "read";
               localStorage.setItem(
                 "read",
                 JSON.stringify(newArray3.concat(newItem3))
@@ -262,7 +283,7 @@ class SearchPage extends Component {
             mangMoi[j].title === this.state.bookDataFromServer[i].title &&
             authors1 === authors2
           ) {
-            indexN.push(i);
+            indexN.push({ i, active: mangMoi[j].active });
           }
         }
       }
