@@ -37,7 +37,7 @@ class SearchPage extends Component {
       let b = [...this.state.currentlyReading];
       let c = [...this.state.read];
       let d = [...this.state.wantToRead];
-      let aaa = [...b, ...c, ...d];
+
       let indexNumber = this.state.bookDataFromServer[index];
       const getResultNumber = (arr, indexNum, text) => {
         for (let i = 0; i < arr.length; i++) {
@@ -50,43 +50,102 @@ class SearchPage extends Component {
           if (arr[i].title === indexNum.title && authors1 === authors2) {
             switch (text) {
               case "currentlyReading":
-                return text;
+                return { text, i };
               case "read":
-                return text;
+                return { text, i };
               case "wantToRead":
-                return text;
+                return { text, i };
               default:
-                return "all";
+                return "";
             }
           }
         }
       };
+      let art =
+        getResultNumber(b, indexNumber, "currentlyReading") ||
+        getResultNumber(d, indexNumber, "wantToRead") ||
+        getResultNumber(c, indexNumber, "read");
 
-      let check = getResultNumber(aaa, indexNumber);
-      if (check === "all") {
+      if (art) {
         this.setState({ selectedValue: value002 }, () => {
           switch (this.state.selectedValue) {
             case "currentlyReading":
-              let art =
-                getResultNumber(b, indexNumber, "currentlyReading") ||
-                getResultNumber(d, indexNumber, "wantToRead") ||
-                getResultNumber(c, indexNumber, "read");
-              console.log(art);
-
+              if (this.state.selectedValue === art.text) return;
+              if ("read" === art.text) {
+                let bb = [...this.state.currentlyReading];
+                let cc = [...this.state.read];
+                let uu = cc.splice(art.i, 1);
+                localStorage.setItem(
+                  "currentlyReading",
+                  JSON.stringify(bb.concat(uu))
+                );
+                localStorage.setItem("read", JSON.stringify(cc));
+                this.setState({ read: cc, currentlyReading: bb.concat(uu) });
+              }
+              if ("wantToRead" === art.text) {
+                let bb = [...this.state.currentlyReading];
+                let cc = [...this.state.wantToRead];
+                let uu = cc.splice(art.i, 1);
+                localStorage.setItem(
+                  "currentlyReading",
+                  JSON.stringify(bb.concat(uu))
+                );
+                localStorage.setItem("wantToRead", JSON.stringify(cc));
+                this.setState({
+                  wantToRead: cc,
+                  currentlyReading: bb.concat(uu),
+                });
+              }
               break;
             case "wantToRead":
-              let art2 =
-                getResultNumber(b, indexNumber, "currentlyReading") ||
-                getResultNumber(d, indexNumber, "wantToRead") ||
-                getResultNumber(c, indexNumber, "read");
-              console.log(art2);
+              if (this.state.selectedValue === art.text) return;
+              if ("read" === art.text) {
+                let bb = [...this.state.wantToRead];
+                let cc = [...this.state.read];
+                let uu = cc.splice(art.i, 1);
+                localStorage.setItem(
+                  "wantToRead",
+                  JSON.stringify(bb.concat(uu))
+                );
+                localStorage.setItem("read", JSON.stringify(cc));
+                this.setState({ read: cc, wantToRead: bb.concat(uu) });
+              }
+              if ("currentlyReading" === art.text) {
+                let bb = [...this.state.wantToRead];
+                let cc = [...this.state.currentlyReading];
+                let uu = cc.splice(art.i, 1);
+                localStorage.setItem(
+                  "wantToRead",
+                  JSON.stringify(bb.concat(uu))
+                );
+                localStorage.setItem("currentlyReading", JSON.stringify(cc));
+                this.setState({
+                  currentlyReading: cc,
+                  wantToRead: bb.concat(uu),
+                });
+              }
               break;
             case "read":
-              let art3 =
-                getResultNumber(b, indexNumber, "currentlyReading") ||
-                getResultNumber(d, indexNumber, "wantToRead") ||
-                getResultNumber(c, indexNumber, "read");
-              console.log(art3);
+              if (this.state.selectedValue === art.text) return;
+              if ("wantToRead" === art.text) {
+                let bb = [...this.state.read];
+                let cc = [...this.state.wantToRead];
+                let uu = cc.splice(art.i, 1);
+                localStorage.setItem("read", JSON.stringify(bb.concat(uu)));
+                localStorage.setItem("wantToRead", JSON.stringify(cc));
+                this.setState({ wantToRead: cc, read: bb.concat(uu) });
+              }
+              if ("currentlyReading" === art.text) {
+                let bb = [...this.state.read];
+                let cc = [...this.state.currentlyReading];
+                let uu = cc.splice(art.i, 1);
+                localStorage.setItem("read", JSON.stringify(bb.concat(uu)));
+                localStorage.setItem("currentlyReading", JSON.stringify(cc));
+                this.setState({
+                  currentlyReading: cc,
+                  read: bb.concat(uu),
+                });
+              }
               break;
             default:
               break;
