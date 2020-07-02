@@ -163,6 +163,33 @@ class SearchPage extends Component {
                 });
               }
               break;
+            case "none":
+              if (this.state.selectedValue === art.text) return;
+              if ("wantToRead" === art.text) {
+                let cc = [...this.state.wantToRead];
+                let uu = cc.splice(art.i, 1);
+                uu[0].active = "move";
+
+                localStorage.setItem("wantToRead", JSON.stringify(cc));
+                this.setState({ wantToRead: cc });
+              }
+              if ("read" === art.text) {
+                let cc = [...this.state.read];
+                let uu = cc.splice(art.i, 1);
+                uu[0].active = "move";
+
+                localStorage.setItem("read", JSON.stringify(cc));
+                this.setState({ read: cc });
+              }
+              if ("currentlyReading" === art.text) {
+                let cc = [...this.state.currentlyReading];
+                let uu = cc.splice(art.i, 1);
+                uu[0].active = "move";
+
+                localStorage.setItem("currentlyReading", JSON.stringify(cc));
+                this.setState({ currentlyReading: cc });
+              }
+              break;
             default:
               break;
           }

@@ -52,6 +52,15 @@ class HomePage extends Component {
               selectedValue: "",
             });
             break;
+          case "none":
+            let item3 = [...this.state.currentlyReading];
+            item3.splice(index, 1);
+            localStorage.setItem("currentlyReading", JSON.stringify(item3));
+            this.setState({
+              currentlyReading: item3,
+              selectedValue: "",
+            });
+            break;
           default:
             break;
         }
@@ -93,6 +102,15 @@ class HomePage extends Component {
               selectedValue: "",
             });
             break;
+          case "none":
+            let item3 = [...this.state.wantToRead];
+            item3.splice(index, 1);
+            localStorage.setItem("wantToRead", JSON.stringify(item3));
+            this.setState({
+              wantToRead: item3,
+              selectedValue: "",
+            });
+            break;
           default:
             break;
         }
@@ -131,6 +149,15 @@ class HomePage extends Component {
             this.setState({
               read: item2,
               currentlyReading: newArray2.concat(newItem2),
+              selectedValue: "",
+            });
+            break;
+          case "none":
+            let item3 = [...this.state.read];
+            item3.splice(index, 1);
+            localStorage.setItem("read", JSON.stringify(item3));
+            this.setState({
+              read: item3,
               selectedValue: "",
             });
             break;
