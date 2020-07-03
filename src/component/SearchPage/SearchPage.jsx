@@ -298,18 +298,7 @@ class SearchPage extends Component {
 
       for (let i = 0; i < this.state.bookDataFromServer.length; i++) {
         for (let j = 0; j < mangMoi.length; j++) {
-          let authors1 = mangMoi[j].hasOwnProperty("authors")
-            ? mangMoi[j].authors[0]
-            : " ";
-          let authors2 = this.state.bookDataFromServer[i].hasOwnProperty(
-            "authors"
-          )
-            ? this.state.bookDataFromServer[i].authors[0]
-            : " ";
-          if (
-            mangMoi[j].title === this.state.bookDataFromServer[i].title &&
-            authors1 === authors2
-          ) {
+          if (mangMoi[j].id === this.state.bookDataFromServer[i].id) {
             indexN.push({ i, active: mangMoi[j].active });
           }
         }
