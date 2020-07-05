@@ -41,13 +41,7 @@ class SearchPage extends Component {
       let indexNumber = this.state.bookDataFromServer[index];
       const getResultNumber = (arr, indexNum, text) => {
         for (let i = 0; i < arr.length; i++) {
-          let authors1 = arr[i].hasOwnProperty("authors")
-            ? arr[i].authors[0]
-            : " ";
-          let authors2 = indexNum.hasOwnProperty("authors")
-            ? indexNum.authors[0]
-            : " ";
-          if (arr[i].title === indexNum.title && authors1 === authors2) {
+          if (arr[i].id === indexNum.id) {
             switch (text) {
               case "currentlyReading":
                 return { text, i };
