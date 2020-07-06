@@ -2,6 +2,7 @@ import React from "react";
 
 function ListBook(props) {
   const { bookDataFromServer, indexN, moveOutFromServer, noResult } = props;
+  console.log(indexN);
 
   return (
     <div className="search-books-results">
