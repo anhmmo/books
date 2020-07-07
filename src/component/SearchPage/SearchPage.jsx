@@ -31,6 +31,7 @@ class SearchPage extends Component {
           : this.setState({ noResult: true });
       });
     };
+
     const changeStateOfBook = (
       selectedStatus,
       rootLocation,
@@ -79,11 +80,12 @@ class SearchPage extends Component {
         }
       }
     };
+
     const moveOutFromServer = (event, index) => {
-      let value002 = event.target.value;
-      let b = [...this.state.currentlyReading];
-      let c = [...this.state.read];
-      let d = [...this.state.wantToRead];
+      let inputValue = event.target.value;
+      let valueCurrentReading = [...this.state.currentlyReading];
+      let valueRead = [...this.state.read];
+      let valueWantToRead = [...this.state.wantToRead];
 
       let indexNumber = this.state.bookDataFromServer[index];
       const getResultNumber = (arr, indexNum, text) => {
@@ -102,20 +104,20 @@ class SearchPage extends Component {
           }
         }
       };
-      let art =
-        getResultNumber(b, indexNumber, "currentlyReading") ||
-        getResultNumber(d, indexNumber, "wantToRead") ||
-        getResultNumber(c, indexNumber, "read");
+      let rootObject =
+        getResultNumber(valueCurrentReading, indexNumber, "currentlyReading") ||
+        getResultNumber(valueWantToRead, indexNumber, "wantToRead") ||
+        getResultNumber(valueRead, indexNumber, "read");
 
-      if (art) {
-        this.setState({ selectedValue: value002 }, () => {
+      if (rootObject) {
+        this.setState({ selectedValue: inputValue }, () => {
           switch (this.state.selectedValue) {
             case "currentlyReading":
-              if (this.state.selectedValue === art.text) return;
+              if (this.state.selectedValue === rootObject.text) return;
 
               changeStateOfBook(
                 "read",
-                art,
+                rootObject,
                 this.state.currentlyReading,
                 this.state.read,
                 "currentlyReading",
@@ -124,7 +126,7 @@ class SearchPage extends Component {
 
               changeStateOfBook(
                 "wantToRead",
-                art,
+                rootObject,
                 this.state.currentlyReading,
                 this.state.wantToRead,
                 "currentlyReading",
@@ -133,10 +135,10 @@ class SearchPage extends Component {
 
               break;
             case "wantToRead":
-              if (this.state.selectedValue === art.text) return;
+              if (this.state.selectedValue === rootObject.text) return;
               changeStateOfBook(
                 "read",
-                art,
+                rootObject,
                 this.state.wantToRead,
                 this.state.read,
                 "wantToRead",
@@ -144,7 +146,7 @@ class SearchPage extends Component {
               );
               changeStateOfBook(
                 "currentlyReading",
-                art,
+                rootObject,
                 this.state.wantToRead,
                 this.state.currentlyReading,
                 "wantToRead",
@@ -153,10 +155,10 @@ class SearchPage extends Component {
 
               break;
             case "read":
-              if (this.state.selectedValue === art.text) return;
+              if (this.state.selectedValue === rootObject.text) return;
               changeStateOfBook(
                 "wantToRead",
-                art,
+                rootObject,
                 this.state.read,
                 this.state.wantToRead,
                 "read",
@@ -164,7 +166,7 @@ class SearchPage extends Component {
               );
               changeStateOfBook(
                 "currentlyReading",
-                art,
+                rootObject,
                 this.state.read,
                 this.state.currentlyReading,
                 "read",
@@ -173,27 +175,27 @@ class SearchPage extends Component {
 
               break;
             case "none":
-              if (this.state.selectedValue === art.text) return;
+              if (this.state.selectedValue === rootObject.text) return;
 
-              if ("wantToRead" === art.text) {
+              if ("wantToRead" === rootObject.text) {
                 let cc = [...this.state.wantToRead];
-                let uu = cc.splice(art.i, 1);
+                let uu = cc.splice(rootObject.i, 1);
                 uu[0].active = "move";
 
                 localStorage.setItem("wantToRead", JSON.stringify(cc));
                 this.setState({ wantToRead: cc });
               }
-              if ("read" === art.text) {
+              if ("read" === rootObject.text) {
                 let cc = [...this.state.read];
-                let uu = cc.splice(art.i, 1);
+                let uu = cc.splice(rootObject.i, 1);
                 uu[0].active = "move";
 
                 localStorage.setItem("read", JSON.stringify(cc));
                 this.setState({ read: cc });
               }
-              if ("currentlyReading" === art.text) {
+              if ("currentlyReading" === rootObject.text) {
                 let cc = [...this.state.currentlyReading];
-                let uu = cc.splice(art.i, 1);
+                let uu = cc.splice(rootObject.i, 1);
                 uu[0].active = "move";
 
                 localStorage.setItem("currentlyReading", JSON.stringify(cc));
@@ -205,7 +207,7 @@ class SearchPage extends Component {
           }
         });
       } else {
-        this.setState({ selectedValue: value002 }, () => {
+        this.setState({ selectedValue: inputValue }, () => {
           switch (this.state.selectedValue) {
             case "currentlyReading":
               let item = [...this.state.bookDataFromServer];
