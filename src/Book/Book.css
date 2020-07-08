@@ -2,9 +2,10 @@
     width: 140px;
 }
 
-.book-title,
-.book-authors {
-    font-size: 0.8em;
+.book-title {
+    font-weight: 600;
+    color: #737373;
+    font-size: 0.86rem;
 }
 
 .book-title {
@@ -12,6 +13,8 @@
 }
 
 .book-authors {
+    font-weight: 400;
+    font-size: 0.75rem;
     color: #999;
 }
 
@@ -23,6 +26,7 @@
 }
 
 .book-cover {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 5px 15px grey;
     background: #eee;
+    border-radius: 3px;
 }

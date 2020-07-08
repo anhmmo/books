@@ -7,28 +7,28 @@ import shelves from "../commons/shelves";
 import Bookshelf from "../Bookshelf/Bookshelf";
 
 import "./ListBooks.css";
+import Loading from "../Loading/Loading";
 
 const ListBooks = ({ books = [], onUpdateBook }) => (
   <div className="list-books">
-    <div className="list-books-title">
-      <h1>MyReads</h1>
-    </div>
     <div className="list-books-content">
       {books.length ? (
         shelves.map(({ type, label }) => (
-          <Bookshelf
-            key={type}
-            title={label}
-            books={books.filter((book) => book.shelf === type)}
-            onUpdateBook={onUpdateBook}
-          />
+          <React.Fragment key={type}>
+            <Bookshelf
+              title={label}
+              books={books.filter((book) => book.shelf === type)}
+              onUpdateBook={onUpdateBook}
+              classname={type}
+            />
+            <div className="open-search">
+              <Link to="/search"></Link>
+            </div>
+          </React.Fragment>
         ))
       ) : (
-        <p align="center">Loading books...</p>
+        <Loading />
       )}
-    </div>
-    <div className="open-search">
-      <Link to="/search">Add a book</Link>
     </div>
   </div>
 );
