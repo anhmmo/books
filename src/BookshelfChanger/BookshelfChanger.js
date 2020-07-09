@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import shelves from "../commons/shelves";
 
-import "./BookshelfChanger.css";
+import "./BookshelfChanger.scss";
 
 class BookshelfChanger extends Component {
   handleChangeSelect = (event) => {
@@ -14,8 +14,14 @@ class BookshelfChanger extends Component {
   render() {
     const { shelf } = this.props;
 
+    let colorChange;
+    if (shelf === "currentlyReading") colorChange = "greenColor";
+    if (shelf === "wantToRead") colorChange = "redColor";
+    if (shelf === "read") colorChange = "orangeColor";
+
     return (
-      <div className="book-shelf-changer">
+      <div className={`book-shelf-changer ${colorChange}`}>
+        <i className="fas fa-caret-down"></i>
         <select value={shelf} onChange={this.handleChangeSelect}>
           <option disabled>Move to...</option>
           {shelves.map((shelf) => (
