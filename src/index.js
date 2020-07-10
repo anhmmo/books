@@ -7,8 +7,6 @@ import App from "./App/App";
 
 import "babel-polyfill";
 
-import "./index.css";
-
 ReactDOM.render(
   <HashRouter>
     <App />

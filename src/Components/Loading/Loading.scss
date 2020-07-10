@@ -1,0 +1,21 @@
+.loading {
+  background-color: rgb(241, 241, 241);
+  height: 100vh;
+}
+svg {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-block;
+}
+
+.new-book {
+  text-decoration: none;
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  transform: translate(-55%, -50%);
+}
