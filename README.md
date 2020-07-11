@@ -1,17 +1,22 @@
 # My Reads
+
 This is the final project for Udacity's React Fundamentals course.
 
 ## Author
-Guilherme Santos <sntguilherme@gmail.com>
+
+anhmmo@gmail.com
 
 ## Install and Run
-* install all project dependencies with `npm install`
-* start the development server with `npm start`
+
+- install all project dependencies with `npm install`
+- start the development server with `npm start`
 
 ## Deploy gh-pages
-* deploy project in [GitHub Pages](https://santosguilherme.github.io/reactnd-project-myreads/#/) with `npm run deploy`
+
+- deploy project in [GitHub Pages](https://santosguilherme.github.io/reactnd-project-myreads/#/) with `npm run deploy`
 
 ## Important
+
 The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
 
 ## Create React App
