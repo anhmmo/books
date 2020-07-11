@@ -5,13 +5,8 @@ import "./BookSelectButton.scss";
 import TypeFilter from "Utils/TypeFilter";
 
 class BookSelectButton extends Component {
-  handleChangeSelect = (event) => {
-    const { onChangeOption } = this.props;
-    onChangeOption(event.target.value);
-  };
-
   render() {
-    const { shelf } = this.props;
+    const { shelf, onChangeOption } = this.props;
 
     let colorChange,
       colorChange2 = "defaultSelect";
@@ -34,7 +29,7 @@ class BookSelectButton extends Component {
         <select
           className={colorChange2}
           value={shelf}
-          onChange={this.handleChangeSelect}
+          onChange={(event) => onChangeOption(event.target.value)}
         >
           <option style={{ color: "black" }} disabled>
             Move to...

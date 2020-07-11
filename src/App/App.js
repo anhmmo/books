@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import * as BooksAPI from "Services/BooksAPI";
 import ListBooks from "Components/ListBooks/ListBooks";
-import SearchBooks from "Components/SearchInput/SearchInput";
+import SearchInput from "Components/SearchInput/SearchInput";
 import NotFound from "Components/404/404";
 
 import "./App.scss";
@@ -28,6 +28,7 @@ class App extends React.Component {
     const storagedBook = books.find(
       (storagedBook) => storagedBook.id === book.id
     );
+    console.log(storagedBook);
     const prevShelf = storagedBook ? storagedBook.shelf : SHELF_NONE;
 
     if (prevShelf !== SHELF_NONE) {
@@ -113,7 +114,7 @@ class App extends React.Component {
             exact
             path="/search"
             render={() => (
-              <SearchBooks
+              <SearchInput
                 booksResult={booksResult}
                 message={searchMessage}
                 onSearchBooks={this.handleSearchBooks}

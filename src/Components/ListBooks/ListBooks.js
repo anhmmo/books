@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import "./ListBooks.scss";
-import Bookshelf from "./BookItem/BookItem";
+import BookItem from "./BookItem/BookItem";
 import Loading from "Components/Loading/Loading";
 import TypeFilter from "Utils/TypeFilter";
 
@@ -14,7 +14,7 @@ const ListBooks = ({ books = [], onUpdateBook }) => (
       {books.length ? (
         TypeFilter.map(({ type, label }) => (
           <React.Fragment key={type}>
-            <Bookshelf
+            <BookItem
               title={label}
               books={books.filter((book) => book.shelf === type)}
               onUpdateBook={onUpdateBook}

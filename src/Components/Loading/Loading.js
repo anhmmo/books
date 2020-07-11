@@ -14,8 +14,6 @@ class Loading extends React.Component {
 
   componentDidMount = () => {
     this.timerHandle = setTimeout(() => {
-      console.log("hello");
-
       this.setState({ display: true });
     }, 5000);
   };

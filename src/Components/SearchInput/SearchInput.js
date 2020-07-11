@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import { Debounce } from "react-throttle";
 
 import "./SearchInput.scss";
-import Book from "Components/ListBooks/Book/Book";
-import If from "Utils/If";
 
-const SearchBooks = ({
+import LastSearch from "Components/LastSearch/LastSearch";
+
+const SearchInput = ({
   clearBooksResult,
   onUpdateBook,
   onSearchBooks,
@@ -23,9 +23,7 @@ const SearchBooks = ({
   return (
     <div className="search-books">
       <div className="search-books-bar">
-        <Link className="close-search" to="/" onClick={clearBooksResult}>
-          Close
-        </Link>
+        <Link className="close-search" to="/" onClick={clearBooksResult}></Link>
         <div className="search-books-input-wrapper">
           <Debounce time="200" handler="onChange">
             <input
@@ -38,26 +36,21 @@ const SearchBooks = ({
         </div>
       </div>
       <div className="search-books-results">
-        <If test={message}>
-          <p align="center">{message}</p>
-        </If>
-        <ol className="books-grid">
-          {booksResult.map((book, index) => (
-            <li key={index}>
-              <Book book={book} onUpdateBook={onUpdateBook} />
-            </li>
-          ))}
-        </ol>
+        <LastSearch
+          message={message}
+          booksResult={booksResult}
+          onUpdateBook={onUpdateBook}
+        />
       </div>
     </div>
   );
 };
 
-SearchBooks.defaultProps = {
+SearchInput.defaultProps = {
   message: "Enter the title or actor you want to search, in the field above.",
 };
 
-SearchBooks.propTypes = {
+SearchInput.propTypes = {
   booksResult: PropTypes.array,
   message: PropTypes.string,
   onSearchBooks: PropTypes.func.isRequired,
@@ -65,4 +58,4 @@ SearchBooks.propTypes = {
   clearBooksResult: PropTypes.func.isRequired,
 };
 
-export default SearchBooks;
+export default SearchInput;

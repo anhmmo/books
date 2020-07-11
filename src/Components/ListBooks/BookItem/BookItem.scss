@@ -1,59 +1,75 @@
 .bookshelf-title {
-    color: #737373;
-    text-align: center;
-    border-bottom: 1px solid #dedede;
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
+
+  color: #737373;
+  text-align: center;
+  border-bottom: 1px solid #dedede;
 }
 
 .bookshelf-title::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    bottom: 6px;
-    transform: translateX(-50%);
-    height: 12px;
-    border-radius: 5px;
-    left: 47.2%;
-    clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 100% 100%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 0 0);
+  content: "";
+
+  position: absolute;
+  bottom: 6px;
+  left: 47.2%;
+  z-index: -1;
+
+  height: 12px;
+  transform: translateX(-50%);
+  border-radius: 5px;
+
+  clip-path: polygon(
+    50% 0%,
+    80% 10%,
+    100% 35%,
+    100% 70%,
+    100% 100%,
+    50% 100%,
+    20% 90%,
+    0% 70%,
+    0% 35%,
+    0 0
+  );
 }
 
 .currentlyReading::after {
-    width: 230px;
-    background-image: linear-gradient(to right bottom, #8beea4, #dbfae0);
+  width: 230px;
+  background-image: linear-gradient(to right bottom, #8beea4, #dbfae0);
 }
 
 .wantToRead::after {
-    width: 170px;
-    background-image: linear-gradient(to right bottom, #f8998d, #fdd5cf);
+  width: 170px;
+  background-image: linear-gradient(to right bottom, #f8998d, #fdd5cf);
 }
 
 .read::after {
-    width: 70px;
-    background-image: linear-gradient(to right bottom, #fa9644, #ffdd9a);
+  width: 70px;
+  background-image: linear-gradient(to right bottom, #fa9644, #ffdd9a);
 }
 
 .bookshelf-books {
-    text-align: center;
+  text-align: center;
 }
 
 /* books grid */
 
 .books-grid {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  padding: 0;
+  margin: 0;
 
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  list-style-type: none;
 }
 
 .books-grid li {
-    padding: 10px 20px;
-    text-align: left;
+  padding: 10px 20px;
+  text-align: left;
 }
 .item-number {
-    font-size: 1.2rem;
-    font-weight: 200;
+  font-size: 1.2rem;
+  font-weight: 200;
 }
