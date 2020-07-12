@@ -6,7 +6,7 @@ import TypeFilter from "Utils/TypeFilter";
 
 class BookSelectButton extends Component {
   render() {
-    const { shelf, onChangeOption } = this.props;
+    const { shelf, onChangeOption, book } = this.props;
 
     let colorChange,
       colorChange2 = "defaultSelect";
@@ -29,7 +29,7 @@ class BookSelectButton extends Component {
         <select
           className={colorChange2}
           value={shelf}
-          onChange={(event) => onChangeOption(event.target.value)}
+          onChange={(event) => onChangeOption(book, event.target.value)}
         >
           <option style={{ color: "black" }} disabled>
             Move to...

@@ -41,6 +41,7 @@ class NotFound extends React.Component {
   }
 
   render() {
+    const { notFoundText, searchText, pathUrl = "" } = this.props;
     return (
       <div className="error">
         <div className="text-center">
@@ -61,14 +62,16 @@ class NotFound extends React.Component {
               </div>
             </div>
           </div>
-          <h2 className="h1">Sorry! The page you are looking not found</h2>
+          <h2 className="h1">
+            Sorry! The {notFoundText} you are looking not found.
+          </h2>
           <Link
-            to="/"
+            to={pathUrl}
             className={
               this.state.display ? "back-to-home" : "back-to-home-none"
             }
           >
-            Back To Home
+            {searchText}
           </Link>
         </div>
       </div>

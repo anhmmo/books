@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
-import { Debounce } from "react-throttle";
 
 import "./SearchInput.scss";
 
@@ -14,25 +13,19 @@ const SearchInput = ({
   onSearchBooks,
   message,
   booksResult = [],
+  lastSearch,
 }) => {
-  const handleChangeSearchInput = ({ target }) => {
-    const query = target.value;
-    onSearchBooks(query);
-  };
-
   return (
     <div className="search-books">
       <div className="search-books-bar">
         <Link className="close-search" to="/" onClick={clearBooksResult}></Link>
         <div className="search-books-input-wrapper">
-          <Debounce time="200" handler="onChange">
-            <input
-              type="text"
-              placeholder="Search by title or author"
-              onChange={handleChangeSearchInput}
-              autoFocus={true}
-            />
-          </Debounce>
+          <input
+            type="text"
+            placeholder="Search by title or author"
+            onChange={(event) => onSearchBooks(event.target.value)}
+            autoFocus={true}
+          />
         </div>
       </div>
       <div className="search-books-results">
@@ -40,6 +33,7 @@ const SearchInput = ({
           message={message}
           booksResult={booksResult}
           onUpdateBook={onUpdateBook}
+          lastSearch={lastSearch}
         />
       </div>
     </div>

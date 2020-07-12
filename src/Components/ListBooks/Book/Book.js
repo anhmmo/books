@@ -6,9 +6,6 @@ import "./Book.scss";
 import BookSelectButton from "../BookSelectButton/BookSelectButton";
 
 const Book = ({ book, onUpdateBook }) => {
-  const handleBookSelectButton = (shelf) => {
-    onUpdateBook({ ...book, shelf });
-  };
   const { title, shelf, authors = [], imageLinks } = book;
   const bookCoverStyle = {
     width: 128,
@@ -28,7 +25,8 @@ const Book = ({ book, onUpdateBook }) => {
         <div className="book-cover" style={bookCoverStyle} />
         <BookSelectButton
           shelf={shelf}
-          onChangeOption={handleBookSelectButton}
+          onChangeOption={onUpdateBook}
+          book={book}
         />
       </div>
       <div className="book-title">{title}</div>
