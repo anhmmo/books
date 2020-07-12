@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import * as BooksAPI from "Services/BooksAPI";
@@ -15,7 +15,9 @@ class App extends React.Component {
       books: [],
       booksResult: [],
       searchMessage: undefined,
+      lastSearch: JSON.parse(localStorage.getItem("lastSearch")) || [],
     };
+    this.inputRef = createRef();
   }
 
   componentDidMount() {
@@ -23,12 +25,11 @@ class App extends React.Component {
   }
 
   updateBooksState(book) {
-    const SHELF_NONE = "none";
     const { books } = this.state;
-    const storagedBook = books.find(
-      (storagedBook) => storagedBook.id === book.id
-    );
-    console.log(storagedBook);
+
+    const SHELF_NONE = "none";
+    const storagedBook = books.find((bookItem) => bookItem.id === book.id);
+
     const prevShelf = storagedBook ? storagedBook.shelf : SHELF_NONE;
 
     if (prevShelf !== SHELF_NONE) {
@@ -47,7 +48,7 @@ class App extends React.Component {
 
   updateBooksResultState(book) {
     const { booksResult } = this.state;
-
+    console.log(booksResult);
     if (!booksResult || !booksResult.length) {
       return;
     }
@@ -60,13 +61,24 @@ class App extends React.Component {
     this.setState({ booksResult });
   }
 
-  handleUpdateBook = (book) => {
+  handleUpdateBook = (book, shelf) => {
+    book = { ...book, shelf };
+
     BooksAPI.update(book, book.shelf);
     this.updateBooksState(book);
     this.updateBooksResultState(book);
   };
 
   handleSearchBooks = (query) => {
+    if (this.inputRef.current) {
+      clearTimeout(this.inputRef.current);
+    }
+    this.inputRef.current = setTimeout(() => {
+      this.searchBooks(query);
+    }, 400);
+  };
+
+  searchBooks(query) {
     if (!query) {
       this.setState({ booksResult: [], searchMessage: undefined });
       return;
@@ -74,9 +86,14 @@ class App extends React.Component {
 
     BooksAPI.search(query).then((response) => {
       if (response.error) {
-        this.setState({ booksResult: [], searchMessage: "No books found." });
+        this.setState({ booksResult: [], searchMessage: "No books" });
         return;
       }
+
+      let queryArray = [...this.state.lastSearch];
+      queryArray.push(query);
+      localStorage.setItem("lastSearch", JSON.stringify(queryArray));
+      this.setState({ lastSearch: queryArray });
 
       let booksResult = response;
       const { books } = this.state;
@@ -91,14 +108,14 @@ class App extends React.Component {
 
       this.setState({ booksResult, searchMessage: "" });
     });
-  };
+  }
 
   handleClearBooksResult = () => {
     this.setState({ booksResult: [], searchMessage: undefined });
   };
 
   render() {
-    const { books, booksResult, searchMessage } = this.state;
+    const { books, booksResult, searchMessage, lastSearch } = this.state;
 
     return (
       <div className="app">
@@ -120,10 +137,20 @@ class App extends React.Component {
                 onSearchBooks={this.handleSearchBooks}
                 onUpdateBook={this.handleUpdateBook}
                 clearBooksResult={this.handleClearBooksResult}
+                lastSearch={lastSearch}
               />
             )}
           />
-          <Route path="" component={NotFound} />
+          <Route
+            path=""
+            render={() => (
+              <NotFound
+                notFoundText="page"
+                searchText="Back To Home"
+                path="/"
+              />
+            )}
+          />
         </Switch>
       </div>
     );
