@@ -6,7 +6,13 @@ import If from "Utils/If";
 import Book from "Components/ListBooks/Book/Book";
 import NotFound from "Components/404/404";
 
-function LastSearch({ message, booksResult, onUpdateBook, lastSearch = [] }) {
+function LastSearch({
+  message,
+  booksResult,
+  onUpdateBook,
+  lastSearch = [],
+  toggleEditing,
+}) {
   return (
     <React.Fragment>
       <If test={message}>
@@ -14,7 +20,8 @@ function LastSearch({ message, booksResult, onUpdateBook, lastSearch = [] }) {
           <NotFound
             notFoundText="book"
             searchText="Search Again !"
-            path="/search"
+            pathUrl="/search"
+            toggleEditing={toggleEditing}
           />
         ) : (
           <div align="center">
